@@ -8,9 +8,9 @@ import java.io.BufferedReader;
 import java.awt.Graphics2D;
 public class TileManager {
 	GamePanel gp;
-	Tile[] tile;
+	public Tile[] tile;
 	// create a 2D int array
-	int mapTileNum[][];
+	public int mapTileNum[][];
 	public TileManager(GamePanel gp){
 		this.gp=gp;
 		// create new types of tiles
@@ -24,23 +24,28 @@ public class TileManager {
 		try{
 			tile[0] = new Tile();
 			tile[0].image=ImageIO.read(getClass().getResourceAsStream("/tiles/grass.png"));
+			tile[0].collision=false;
 			
 			tile[1] = new Tile();
 			tile[1].image=ImageIO.read(getClass().getResourceAsStream("/tiles/wall.png"));
+			tile[1].collision=true;
 
 			
 			tile[2] = new Tile();
 			tile[2].image=ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
+			tile[2].collision=true;
 
 			tile[3] = new Tile();
 			tile[3].image=ImageIO.read(getClass().getResourceAsStream("/tiles/earth.png"));
+			tile[0].collision=false;
 			
 			tile[4] = new Tile();
 			tile[4].image=ImageIO.read(getClass().getResourceAsStream("/tiles/tree.png"));
-
+			tile[4].collision=true;
 			
 			tile[5] = new Tile();
 			tile[5].image=ImageIO.read(getClass().getResourceAsStream("/tiles/sand.png"));
+			tile[0].collision=false;
 		}
 		catch (IOException e){
 			e.printStackTrace();

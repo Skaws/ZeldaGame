@@ -41,6 +41,7 @@ public class GamePanel  extends JPanel implements Runnable{
     KeyHandler keyH = new KeyHandler();
     //will be run 60 times per second to be 60fps
     Thread gameThread;
+    public CollisionChecker colChecker = new CollisionChecker(this);
     // create a player class and pass this gamepanel into it
     public Player player = new Player(this,keyH);
     // set default player position
