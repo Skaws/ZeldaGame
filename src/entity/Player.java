@@ -16,7 +16,8 @@ public class Player extends Entity{
     GamePanel gp;
     KeyHandler keyH;
     boolean moving;
-    
+    int hasKey=0;
+
     public final int screenX, screenY;
 
     public Player(GamePanel gp, KeyHandler keyH){
@@ -26,6 +27,9 @@ public class Player extends Entity{
         screenY = gp.screenHeight/2 - (gp.tileSize/2);
         // make the player Hurtbox smaller than the sprite as a 32x32 rectangle in the middle bottom of the sprite
         solidArea = new Rectangle(12, 12, 24, 30);
+        // record the default values just in case they can be changed later
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
 
         setDefaultValues();
         getPlayerImage();
@@ -77,7 +81,10 @@ public class Player extends Entity{
             // CHECK TILE COLLISION
             collisionOn=false;
             gp.colChecker.checkTile(this);
-
+            
+            // CHECK OBJECT COLLISION
+            int objIndex = gp.colChecker.checkObject(this, true);
+            pickUpObject(objIndex);
             // IF COLLISION IS FALSE PLAYER CAN MOVE
             if(collisionOn==false){
                 switch(direction){
@@ -105,6 +112,28 @@ public class Player extends Entity{
                     spriteNum=1;
                 }
                 spriteCounter=0;
+            }
+        }
+    }
+
+    public void pickUpObject(int i){
+        // if it's an actual object, destroy it
+        if(i!=999){
+            String objName = gp.objArray[i].name;
+            switch (objName) {
+                case "Key":
+                hasKey++;
+                gp.objArray[i]=null;
+                System.out.println("Player has: "+hasKey+ " keys!");
+                    break;
+            
+                case"Door":
+                if(hasKey>0){
+                    gp.objArray[i]=null;
+                }
+                hasKey--;
+                System.out.println("Key used. \nPlayer has: "+hasKey+ " keys!");
+                    break;
             }
         }
     }

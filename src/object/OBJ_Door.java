@@ -10,5 +10,6 @@ public class OBJ_Door extends SuperObject{
         } catch (Exception e) {
             // TODO: handle exception
         }
+        collision = true;
     }
 }

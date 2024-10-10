@@ -82,4 +82,76 @@ public class CollisionChecker {
             break;
         }
     }
+    // check if player is hitting an object, after which return the index of the object. The entity is the player btw
+    public int checkObject(Entity entity, boolean player){
+        int index = 999;
+        for(int i=0; i< gp.objArray.length;i++){
+            if(gp.objArray[i]!=null){
+                // get entity's (player's) solid area position
+                entity.solidArea.x = entity.worldX + entity.solidArea.x;
+                entity.solidArea.y = entity.worldY + entity.solidArea.y;
+
+                // get the object's solid area position
+                gp.objArray[i].solidArea.x = gp.objArray[i].worldX + gp.objArray[i].solidArea.x;
+                gp.objArray[i].solidArea.y = gp.objArray[i].worldY + gp.objArray[i].solidArea.y;
+
+                switch(entity.direction){
+                case "up":
+                    // predict where the player's hurtbox will go
+                    entity.solidArea.y -=entity.speed;
+                    // check if this prediction intersects an object
+                    if(entity.solidArea.intersects(gp.objArray[i].solidArea)){
+                        if(gp.objArray[i].collision==true){
+                            entity.collisionOn=true;
+                        }
+                        if(player==true){
+                            index=i;
+                        }
+                    }
+                    break;
+                case "down":
+                    entity.solidArea.y +=entity.speed;entity.solidArea.y -=entity.speed;
+                    // check if this prediction intersects an object
+                    if(entity.solidArea.intersects(gp.objArray[i].solidArea)){
+                        if(gp.objArray[i].collision==true){
+                            entity.collisionOn=true;
+                        }
+                        if(player==true){
+                            index=i;
+                        }
+                    }
+                    break;
+                case "left":
+                    entity.solidArea.x -=entity.speed;
+                    if(entity.solidArea.intersects(gp.objArray[i].solidArea)){
+                        if(gp.objArray[i].collision==true){
+                            entity.collisionOn=true;
+                        }
+                        if(player==true){
+                            index=i;
+                        }
+                    }
+                    break;
+                case "right":
+                    entity.solidArea.x +=entity.speed;
+                    if(entity.solidArea.intersects(gp.objArray[i].solidArea)){
+                        if(gp.objArray[i].collision==true){
+                            entity.collisionOn=true;
+                        }
+                        if(player==true){
+                            index=i;
+                        }
+                    }
+                    break;
+                }
+                entity.solidArea.x = entity.solidAreaDefaultX;
+                entity.solidArea.y = entity.solidAreaDefaultY;
+                
+                gp.objArray[i].solidArea.x = gp.objArray[i].solidAreaDefaultX;
+                gp.objArray[i].solidArea.y = gp.objArray[i].solidAreaDefaultY;
+            }
+        }
+
+        return index;
+    }
 }
