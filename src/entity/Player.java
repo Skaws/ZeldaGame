@@ -117,11 +117,13 @@ public class Player extends Entity{
     }
 
     public void pickUpObject(int i){
-        // if it's an actual object, destroy it
+        // if it's an actual object, find out which kind and go from there
         if(i!=999){
             String objName = gp.objArray[i].name;
             switch (objName) {
                 case "Key":
+                
+                gp.playSE(1);
                 hasKey++;
                 gp.objArray[i]=null;
                 System.out.println("Player has: "+hasKey+ " keys!");
@@ -129,11 +131,20 @@ public class Player extends Entity{
             
                 case"Door":
                 if(hasKey>0){
+                    gp.playSE(3);
                     gp.objArray[i]=null;
+                    hasKey--;
                 }
-                hasKey--;
                 System.out.println("Key used. \nPlayer has: "+hasKey+ " keys!");
                     break;
+
+                case "Boots":
+                gp.playSE(4);
+                System.out.println("Movement Speed Increase!");
+                speed+=2;
+                gp.objArray[i]=null;
+                
+                break;
             }
         }
     }

@@ -1,5 +1,6 @@
 package main;
 
+import object.OBJ_Boots;
 import object.OBJ_Chest;
 import object.OBJ_Door;
 import object.OBJ_Key;
@@ -43,8 +44,13 @@ public class AssetSetter {
 
         
         gp.objArray[6] = new OBJ_Chest();
-        // put the key at 23,7 TILE coordinates
+        // put the chest at 23,7 TILE coordinates
         gp.objArray[6].worldX = 10 * gp.tileSize;
         gp.objArray[6].worldY = 7 * gp.tileSize;
+
+        gp.objArray[7] = new OBJ_Boots();
+        // put the chest at 23,7 TILE coordinates
+        gp.objArray[7].worldX = 37 * gp.tileSize;
+        gp.objArray[7].worldY = 42 * gp.tileSize;
     }
 }

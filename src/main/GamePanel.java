@@ -37,18 +37,29 @@ public class GamePanel  extends JPanel implements Runnable{
     // FPS
     int FPS = 60;
 
+    // SYSTEM
     TileManager tileM = new TileManager(this);
     // create a new Keyhandler object
     KeyHandler keyH = new KeyHandler();
+    Sound music = new Sound();
+    
+    Sound sfx = new Sound();
+
+    public CollisionChecker colChecker = new CollisionChecker(this);
+    // create an asset setter object to handle it all
+    public AssetSetter aSetter = new AssetSetter(this);
+
+    
     //will be run 60 times per second to be 60fps
     Thread gameThread;
-    public CollisionChecker colChecker = new CollisionChecker(this);
+
+
+    // ENTITY AND OBJECTS
     // create a player class and pass this gamepanel into it
     public Player player = new Player(this,keyH);
     // create an array of objects on screen. for now it's a limit of 10 onscreen at once
     public SuperObject objArray[] = new SuperObject[10];
-    // create an asset setter object to handle it all
-    public AssetSetter aSetter = new AssetSetter(this);
+
 
     // set default player position
     int playerX = 100;
@@ -70,6 +81,8 @@ public class GamePanel  extends JPanel implements Runnable{
 
     public void setupGame(){
         aSetter.setObject();
+        // play the background music
+        playMusic(0);
     }
 
     public void startGameThread(){
@@ -143,5 +156,21 @@ public class GamePanel  extends JPanel implements Runnable{
             }
         }
         player.draw(g2);
+    }
+
+    public void playMusic(int i){
+        // set the music then play and loop
+        music.setFile(i);
+        music.play();
+        music.loop();
+    }
+
+    public void stopMusic(){
+        music.stop();
+    }
+
+    public void playSE(int i){
+        sfx.setFile(i);
+        sfx.play();
     }
 }
