@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import entity.Player;
+import object.SuperObject;
 import tile.TileManager;
 
 //subclass of JPanel. This works as the game screen class
@@ -44,6 +45,11 @@ public class GamePanel  extends JPanel implements Runnable{
     public CollisionChecker colChecker = new CollisionChecker(this);
     // create a player class and pass this gamepanel into it
     public Player player = new Player(this,keyH);
+    // create an array of objects on screen. for now it's a limit of 10 onscreen at once
+    public SuperObject objArray[] = new SuperObject[10];
+    // create an asset setter object to handle it all
+    public AssetSetter aSetter = new AssetSetter(this);
+
     // set default player position
     int playerX = 100;
     int playerY = 100;
@@ -60,6 +66,10 @@ public class GamePanel  extends JPanel implements Runnable{
         this.addKeyListener(keyH);
         // "Focuses" the GamePanel to recieve key inputs
         this.setFocusable(true);
+    }
+
+    public void setupGame(){
+        aSetter.setObject();
     }
 
     public void startGameThread(){
@@ -126,7 +136,12 @@ public class GamePanel  extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D) g;
         // whichever gets drawn first will be the background (e.g tile is layer 0, player will be over it on layer 1)
         tileM.draw(g2);
-
+        for(int i=0; i<objArray.length;i++){
+            // if the object exists
+            if(objArray[i]!=null){
+                objArray[i].draw(g2, this);
+            }
+        }
         player.draw(g2);
     }
 }
