@@ -16,7 +16,8 @@ public class Sound {
         soundURL[1] = getClass().getResource("/sound/rupee.wav");
         soundURL[2] = getClass().getResource("/sound/itemGet.wav");
         soundURL[3] = getClass().getResource("/sound/doorOpen.wav");
-        soundURL[4] = getClass().getResource("/sound/fanfare.wav");
+        soundURL[4] = getClass().getResource("/sound/classicPowerup.wav");
+        soundURL[5] = getClass().getResource("/sound/victory.wav");
     }
     // pass in the index of the filepath in the array and turn that into the audio
     public void setFile(int i){

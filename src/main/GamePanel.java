@@ -41,6 +41,7 @@ public class GamePanel  extends JPanel implements Runnable{
     TileManager tileM = new TileManager(this);
     // create a new Keyhandler object
     KeyHandler keyH = new KeyHandler();
+    public UI ui = new UI(this);
     Sound music = new Sound();
     
     Sound sfx = new Sound();
@@ -156,6 +157,9 @@ public class GamePanel  extends JPanel implements Runnable{
             }
         }
         player.draw(g2);
+        ui.draw(g2);
+
+        g2.dispose();
     }
 
     public void playMusic(int i){
